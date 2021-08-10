@@ -1,7 +1,8 @@
 import React from "react";
 import { authService } from "fbase";
 import { useHistory } from "react-router";
-export default () => {
+
+const Profile = () => {
   const history = useHistory();
   const signOut = () => {
     authService.signOut();
@@ -13,3 +14,5 @@ export default () => {
     </>
   );
 };
+
+export default Profile;
