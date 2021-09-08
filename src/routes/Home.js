@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { dbService } from "fbase";
 import Fweet from "components/Fweet";
 import FweetBoard from "components/FweetBoard";
+import "../style.css";
 
 const Home = ({ userObj }) => {
   const [fweets, setFweets] = useState([]);
@@ -17,9 +18,9 @@ const Home = ({ userObj }) => {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <FweetBoard userObj={userObj} />
-      <div>
+      <div style={{ marginTop: 30 }}>
         {fweets.map((fweet) => (
           <Fweet
             key={fweet.id}

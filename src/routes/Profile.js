@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { authService, dbService } from "fbase";
 import { useHistory } from "react-router";
 import Fweet from "components/Fweet";
+import "../styles/Profile.css";
+
+
 const Profile = ({ refreshUser, userObj }) => {
   const [myFweets, setMyFweets] = useState([]);
   const history = useHistory();
@@ -46,15 +49,24 @@ const Profile = ({ refreshUser, userObj }) => {
     }
   };
   return (
-    <>
-      <form onSubmit={onSubmit}>
+    <div className="container">
+      <form onSubmit={onSubmit} className="profileForm">
         <input
           onChange={onChange}
           type="text"
+          autoFocus
           placeholder="Display name"
           value={newDisplayName}
+          className="formInput"
         />
-        <input type="submit" value="update Profile" />
+        <input
+          type="submit"
+          value="Update Profile"
+          className="formBtn"
+          style={{
+            marginTop: 10,
+          }}
+        />
       </form>
       <div>
         {myFweets.map((fweet) => (
@@ -65,8 +77,10 @@ const Profile = ({ refreshUser, userObj }) => {
           />
         ))}
       </div>
-      <button onClick={signOut}>Log Out</button>
-    </>
+      <span className="formBtn cancelBtn logOut" onClick={signOut}>
+        Log Out
+      </span>
+    </div>
   );
 };
 

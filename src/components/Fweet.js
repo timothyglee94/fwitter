@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { dbService, storageService } from "fbase";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import "../style.css";
+import "../styles/FweetStyle.css";
 
 const Fweet = ({ fweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
   const [newFweet, setNewFweet] = useState(fweetObj.text);
 
-  const onDeleteCLick = async () => {
+  const onDeleteClick = async () => {
     const ok = window.confirm("Are you sure you want to delete this fweet?");
     if (ok) {
       await dbService.doc(`fweets/${fweetObj.id}`).delete();
@@ -33,37 +37,40 @@ const Fweet = ({ fweetObj, isOwner }) => {
   };
 
   return (
-    <div>
+    <div className="fweet">
       {editing ? (
         <>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} className="container fweetEdit">
             <input
               type="text"
               placeholder="Edit your fweet"
               value={newFweet}
               required
+              autoFocus
               onChange={onChange}
+              className="formInput"
             />
-            <input type="submit" value="Update fweet" />
+            <input type="submit" value="Update nweet" className="formBtn" />
           </form>
-          <button onClick={toggleEditing}>Cancel</button>
+          <span onClick={toggleEditing} className="formBtn cancelBtn">
+            Cancel
+          </span>
         </>
       ) : (
         <>
           <h4>{fweetObj.text}</h4>
           {fweetObj.fileUrl && (
-            <img
-              src={fweetObj.fileUrl}
-              width="50px"
-              height="50px"
-              alt={fweetObj.fileUrl}
-            />
+            <img src={fweetObj.fileUrl} alt={fweetObj.fileUrl} />
           )}
           {isOwner && (
-            <>
-              <button onClick={onDeleteCLick}>Delete Fweet</button>
-              <button onClick={toggleEditing}>Edit Fweet</button>
-            </>
+            <div className="fweet__actions">
+              <span onClick={onDeleteClick}>
+                <FontAwesomeIcon icon={faTrash} />
+              </span>
+              <span onClick={toggleEditing}>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </span>
+            </div>
           )}
         </>
       )}
@@ -72,5 +79,4 @@ const Fweet = ({ fweetObj, isOwner }) => {
 };
 
 export default Fweet;
-/*
- */
+
